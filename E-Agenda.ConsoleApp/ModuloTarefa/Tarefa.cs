@@ -32,6 +32,18 @@ namespace E_Agenda.ConsoleApp.ModuloTarefa
 
         }
 
+        public string ToStringDeitens()
+        {
+            StringBuilder si = new StringBuilder();
+
+            foreach (Item item in listaDeItens)
+            {
+                si.AppendLine(item.descricao);
+            }
+
+            return si.ToString();
+        }
+
         public override string ToString()
         {
             return "Número: " + numero + Environment.NewLine +
@@ -40,7 +52,7 @@ namespace E_Agenda.ConsoleApp.ModuloTarefa
                 "Data de criação: " + dataCriacao + Environment.NewLine +
                 "Data de conclusão: " + dataConclusao + Environment.NewLine +
                 "Pecentual Completo: " + percentual + Environment.NewLine +
-                "Tarefas: " + item.descricao + Environment.NewLine;
+                "Tarefas: " + ToStringDeitens();
 
 
         }
