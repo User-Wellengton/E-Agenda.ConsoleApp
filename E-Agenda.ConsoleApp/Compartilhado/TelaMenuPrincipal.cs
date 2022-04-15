@@ -22,18 +22,18 @@ namespace E_Agenda.ConsoleApp.Compartilhado
 
         private  RepositorioTarefa repositorioTarefa;
         private  TelaCadastroTarefa telaCadastroTarefa;
-        public TelaMenuPrincipal(Notificador notificador)
+        public TelaMenuPrincipal()
         {            
 
             repositorioContato = new RepositorioContato();
-            telaCadastroContato = new TelaCadastroContato(repositorioContato, notificador);
+            telaCadastroContato = new TelaCadastroContato(repositorioContato);
 
             repositorioTarefa = new RepositorioTarefa();
-            telaCadastroTarefa = new TelaCadastroTarefa(repositorioTarefa, notificador);
+            telaCadastroTarefa = new TelaCadastroTarefa(repositorioTarefa);
 
             repositorioCompromisso = new RepositorioCompromisso();
             telaCadastroCompromisso = new TelaCadastroCompromisso( telaCadastroContato,
-             repositorioCompromisso, repositorioContato,  notificador);
+             repositorioCompromisso, repositorioContato);
 
 
 

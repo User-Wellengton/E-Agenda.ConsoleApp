@@ -9,18 +9,19 @@ namespace E_Agenda.ConsoleApp.ModuloTarefa
 {
     public class Tarefa : EntidadeBase
     {
-        Item item;
+        
 
         public string titulo;
         public DateTime dataCriacao;
         public DateTime dataConclusao;
-        public int percentual;
+        public decimal percentual;
         public Prioridade tipoprioridade;
         List<Item> listaDeItens;
+        public bool concluida;
 
 
 
-        public Tarefa(string titulo, DateTime dataCriacao, DateTime dataConclusao, int percentual, Prioridade tipoprioridade)
+        public Tarefa(string titulo, DateTime dataCriacao, DateTime dataConclusao, decimal percentual, Prioridade tipoprioridade)
         {
             this.titulo = titulo;
             this.dataCriacao = dataCriacao;
@@ -32,17 +33,7 @@ namespace E_Agenda.ConsoleApp.ModuloTarefa
 
         }
 
-        public string ToStringDeitens()
-        {
-            StringBuilder si = new StringBuilder();
-
-            foreach (Item item in listaDeItens)
-            {
-                si.AppendLine(item.descricao);
-            }
-
-            return si.ToString();
-        }
+       
          
         public override string ToString()
         {
@@ -56,11 +47,61 @@ namespace E_Agenda.ConsoleApp.ModuloTarefa
 
 
         }
+        public string ToStringDeitens()
+        {
+            StringBuilder si = new StringBuilder();
 
+            foreach (Item item in listaDeItens)
+            {
+                si.AppendLine(item.descricao);
+            }
+
+            return si.ToString();
+        }
         public void InserirItensNaTarefa(Item items)
         {
             listaDeItens.Add(items);
         }
+
+        public void ConcluirItem(int numeroItem)
+        {
+            if (this.listaDeItens[numeroItem].itemConcluido == true)
+            {
+                Notificador.ApresentarMensagem("Item ja concluido", "erro");
+                return;
+            }
+
+            this.listaDeItens[numeroItem].itemConcluido = true;
+
+            AtualizarPercentual();
+
+        }
+        
+        public void AtualizarPercentual()
+        {
+            int quantiaItensTotais = listaDeItens.Count;
+            int contador = 0;
+            foreach(Item item in listaDeItens)
+            {
+                if (item.itemConcluido == true)
+                {
+                    contador++; 
+                }
+            }
+
+            if (contador == 0)
+            {
+                return;
+            }
+
+            decimal totalPercentual = contador *100 / quantiaItensTotais;
+
+            this.percentual = totalPercentual;
+        }
+
+
+
+
 
     }
     public enum Prioridade

@@ -69,6 +69,18 @@ namespace E_Agenda.ConsoleApp.Compartilhado
             return null;
         }
 
+
+        public T SelecionarItem(int idSelecionado)
+        {
+            foreach (T registro in registros)
+            {
+                if (idSelecionado == registro.numero)
+                    return registro;
+            }
+            return null;
+        }
+
+
         public List<T> SelecionarTodos()
         {
 

@@ -12,13 +12,13 @@ namespace E_Agenda.ConsoleApp.ModuloTarefa
     {
 
         private readonly RepositorioTarefa repositorioTarefa;
-        private readonly Notificador notificador;
+       
 
         
-        public TelaCadastroTarefa(RepositorioTarefa repositorioTarefa, Notificador notificador) : base("Cadastro de tarefa")
+        public TelaCadastroTarefa(RepositorioTarefa repositorioTarefa) : base("Cadastro de tarefa")
         {
             this.repositorioTarefa = repositorioTarefa;
-            this.notificador = notificador;
+            
         }
 
         public void InserirRegistro()
@@ -46,9 +46,9 @@ namespace E_Agenda.ConsoleApp.ModuloTarefa
 
 
             if (statusValidacao == "REGISTRO_VALIDO")
-                notificador.ApresentarMensagem("tarefa cadastrada com sucesso!", "sucesso");
+                Notificador.ApresentarMensagem("tarefa cadastrada com sucesso!", "sucesso");
             else
-                notificador.ApresentarMensagem(statusValidacao, "erro");
+                Notificador.ApresentarMensagem(statusValidacao, "erro");
         }
 
 
@@ -61,7 +61,7 @@ namespace E_Agenda.ConsoleApp.ModuloTarefa
 
             if (temContatoCadastrados == false)
             {
-                notificador.ApresentarMensagem("Nenhuma tarefa cadastrada.", "atencao");
+                Notificador.ApresentarMensagem("Nenhuma tarefa cadastrada.", "atencao");
                 return;
             }
 
@@ -73,9 +73,9 @@ namespace E_Agenda.ConsoleApp.ModuloTarefa
             bool conseguiuEditar = repositorioTarefa.Editar(x => x.numero == numeroTarefa, tarefaAtualizado);
 
             if (!conseguiuEditar)
-                notificador.ApresentarMensagem("Não foi possível editar.", "erro");
+                Notificador.ApresentarMensagem("Não foi possível editar.", "erro");
             else
-                notificador.ApresentarMensagem("Tarefa editada com sucesso", "sucesso");
+                Notificador.ApresentarMensagem("Tarefa editada com sucesso", "sucesso");
 
         }
 
@@ -87,7 +87,7 @@ namespace E_Agenda.ConsoleApp.ModuloTarefa
 
             if (temTarefaCadastrados == false)
             {
-                notificador.ApresentarMensagem(
+                Notificador.ApresentarMensagem(
                     "Nenhuma Tarefa  para  excluir", "atencao");
                 return;
             }
@@ -98,9 +98,9 @@ namespace E_Agenda.ConsoleApp.ModuloTarefa
             bool conseguiuExcluir = repositorioTarefa.Excluir(x => x.numero == numeroTarefa);
 
             if (!conseguiuExcluir)
-                notificador.ApresentarMensagem("Não foi possível excluir.", "erro");
+                Notificador.ApresentarMensagem("Não foi possível excluir.", "erro");
             else
-                notificador.ApresentarMensagem("Tarefa excluído com sucesso!", "sucesso");
+                Notificador.ApresentarMensagem("Tarefa excluído com sucesso!", "sucesso");
         }
 
         public bool VisualizarRegistro(string tipo)
@@ -112,7 +112,7 @@ namespace E_Agenda.ConsoleApp.ModuloTarefa
 
             if (tarefas.Count == 0)
             {
-                notificador.ApresentarMensagem("Não tem nenhuma Tarefa.", "atencao");
+                Notificador.ApresentarMensagem("Não tem nenhuma Tarefa.", "atencao");
                 return false;
             }
 
@@ -154,6 +154,44 @@ namespace E_Agenda.ConsoleApp.ModuloTarefa
             return tarefa;
 
         }
+
+        public void ChamarConcluitItens()
+        {
+            VisualizarRegistro("Pesquisando");
+            Console.WriteLine("Qual dessas tarefas você gostaria de selecionar:");
+            int tarefaSelecionada = Convert.ToInt32(Console.ReadLine());
+
+            Tarefa tarefa = repositorioTarefa.SelecionarItem(tarefaSelecionada);
+
+            Console.Clear();
+
+            Console.WriteLine(tarefa.ToString());
+
+            Console.WriteLine("Qual desses itens você gostaria de concluir:");
+            int itemConcluir = Convert.ToInt32(Console.ReadLine());
+
+            tarefa.ConcluirItem(itemConcluir);
+
+
+        }
+
+        public override string MostrarOpcoes()
+        {
+            MostrarTitulo(Titulo);
+
+            Console.WriteLine("Digite 1 para Inserir");
+            Console.WriteLine("Digite 2 para Editar");
+            Console.WriteLine("Digite 3 para Excluir");
+            Console.WriteLine("Digite 4 para Visualizar");
+            Console.WriteLine("Digite 5 para Concluir Itens");
+
+            Console.WriteLine("Digite s para sair");
+
+            string opcao = Console.ReadLine();
+
+            return opcao;
+        }
+
 
         private Item ObterItens()
         {

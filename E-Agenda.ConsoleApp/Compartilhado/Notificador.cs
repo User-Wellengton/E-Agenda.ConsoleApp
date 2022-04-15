@@ -7,10 +7,10 @@ using System.Collections.Generic;
 
 namespace E_Agenda.ConsoleApp.Compartilhado
 {
-    public class Notificador
+    public static class Notificador
     {
                 
-        public void ApresentarMensagem(string mensagem, string tipoMensagem)
+        public static void ApresentarMensagem(string mensagem, string tipoMensagem)
         {
             switch (tipoMensagem)
             {

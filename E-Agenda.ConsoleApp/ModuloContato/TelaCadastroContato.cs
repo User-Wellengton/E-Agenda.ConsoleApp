@@ -10,12 +10,12 @@ namespace E_Agenda.ConsoleApp.ModuloContato
     internal class TelaCadastroContato : TelaBase, ITela
     {
         private readonly RepositorioContato repositorioContato;
-        private readonly Notificador notificador;
+        
 
-        public TelaCadastroContato(RepositorioContato repositorioContato, Notificador notificador) : base("Cadastro de Contato")
+        public TelaCadastroContato(RepositorioContato repositorioContato) : base("Cadastro de Contato")
         {
             this.repositorioContato = repositorioContato;
-            this.notificador = notificador;
+            
         }
 
         public void InserirRegistro()
@@ -27,9 +27,9 @@ namespace E_Agenda.ConsoleApp.ModuloContato
             string statusValidacao = repositorioContato.Inserir(contato);
 
             if (statusValidacao == "REGISTRO_VALIDO")
-                notificador.ApresentarMensagem("Contato cadastrado com sucesso!", "sucesso");
+                Notificador.ApresentarMensagem("Contato cadastrado com sucesso!", "sucesso");
             else
-                notificador.ApresentarMensagem(statusValidacao, "erro");
+                Notificador.ApresentarMensagem(statusValidacao, "erro");
         }
 
 
@@ -41,7 +41,7 @@ namespace E_Agenda.ConsoleApp.ModuloContato
 
             if (temContatoCadastrados == false)
             {
-                notificador.ApresentarMensagem("Nenhum Contato cadastrado .", "atencao");
+                Notificador.ApresentarMensagem("Nenhum Contato cadastrado .", "atencao");
                 return;
             }
 
@@ -53,9 +53,9 @@ namespace E_Agenda.ConsoleApp.ModuloContato
             bool conseguiuEditar = repositorioContato.Editar(x => x.numero == numeroContato, contatoAtualizado);
 
             if (!conseguiuEditar)
-                notificador.ApresentarMensagem("Não foi possível editar.", "erro");
+                Notificador.ApresentarMensagem("Não foi possível editar.", "erro");
             else
-                notificador.ApresentarMensagem("Contato editado com sucesso", "sucesso");
+                Notificador.ApresentarMensagem("Contato editado com sucesso", "sucesso");
 
         }
 
@@ -67,7 +67,7 @@ namespace E_Agenda.ConsoleApp.ModuloContato
 
             if (temContatoCadastrados == false)
             {
-                notificador.ApresentarMensagem(
+                Notificador.ApresentarMensagem(
                     "Nenhum Contato cadastrado ", "atencao");
                 return;
             }
@@ -78,9 +78,9 @@ namespace E_Agenda.ConsoleApp.ModuloContato
             bool conseguiuExcluir = repositorioContato.Excluir(x => x.numero == numeroContato);
 
             if (!conseguiuExcluir)
-                notificador.ApresentarMensagem("Não foi possível excluir.", "erro");
+                Notificador.ApresentarMensagem("Não foi possível excluir.", "erro");
             else
-                notificador.ApresentarMensagem("Contato excluído com sucesso!", "sucesso");
+                Notificador.ApresentarMensagem("Contato excluído com sucesso!", "sucesso");
         }
 
         public bool VisualizarRegistro(string tipo)
@@ -92,7 +92,7 @@ namespace E_Agenda.ConsoleApp.ModuloContato
 
             if (contatos.Count == 0)
             {
-                notificador.ApresentarMensagem("Não há nenhum contato disponível.", "atencao");
+                Notificador.ApresentarMensagem("Não há nenhum contato disponível.", "atencao");
                 return false;
             }
 

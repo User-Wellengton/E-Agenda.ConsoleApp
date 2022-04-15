@@ -1,5 +1,6 @@
 ﻿using System;
 using E_Agenda.ConsoleApp.Compartilhado;
+using E_Agenda.ConsoleApp.ModuloTarefa;
 
 namespace E_Agenda.ConsoleApp
 {
@@ -9,7 +10,7 @@ namespace E_Agenda.ConsoleApp
         {
 
 
-            TelaMenuPrincipal telaMenuPrincipal = new TelaMenuPrincipal(new Notificador());
+            TelaMenuPrincipal telaMenuPrincipal = new TelaMenuPrincipal();
 
             while (true)
             {
@@ -35,7 +36,19 @@ namespace E_Agenda.ConsoleApp
 
                     if (opcaoSelecionada == "4")
                         telaCadastroBasico.VisualizarRegistro("Tela");
+
                 }
+
+                if (telaSelecionada is TelaCadastroTarefa)
+                {
+                    TelaCadastroTarefa telaCadastroTarefa = (TelaCadastroTarefa)telaSelecionada;
+                   
+                    if (opcaoSelecionada == "5")
+                        telaCadastroTarefa.ChamarConcluitItens();
+
+
+                }
+
             }
 
 

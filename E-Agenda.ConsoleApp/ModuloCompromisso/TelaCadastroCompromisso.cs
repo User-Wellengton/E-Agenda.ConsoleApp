@@ -14,16 +14,16 @@ namespace E_Agenda.ConsoleApp.Compromisso
         private readonly TelaCadastroContato telaCadastroContato;
         private readonly RepositorioCompromisso repositorioCompromisso;
         private readonly RepositorioContato repositorioContato;
-        private readonly Notificador notificador;
+        
 
         public TelaCadastroCompromisso(TelaCadastroContato telaCadastroContato,
             RepositorioCompromisso repositorioCompromisso,
-            RepositorioContato repositorioContato, Notificador notificador) : base("Cadastro de Compromisso")
+            RepositorioContato repositorioContato) : base("Cadastro de Compromisso")
         {
             this.telaCadastroContato = telaCadastroContato;
             this.repositorioCompromisso = repositorioCompromisso;
             this.repositorioContato = repositorioContato;
-            this.notificador = notificador;
+            
         }
 
         public void InserirRegistro()
@@ -37,9 +37,9 @@ namespace E_Agenda.ConsoleApp.Compromisso
             string statusValidacao = repositorioCompromisso.Inserir(compromisso);
 
             if (statusValidacao == "REGISTRO_VALIDO")
-                notificador.ApresentarMensagem("Compromisso cadastrado com sucesso!", "sucesso");
+                Notificador.ApresentarMensagem("Compromisso cadastrado com sucesso!", "sucesso");
             else
-                notificador.ApresentarMensagem(statusValidacao, "erro");
+                Notificador.ApresentarMensagem(statusValidacao, "erro");
         }
 
         public void EditarRegistro()
@@ -50,7 +50,7 @@ namespace E_Agenda.ConsoleApp.Compromisso
 
             if (temCompromissoCadastrados == false)
             {
-                notificador.ApresentarMensagem("Nenhum Compromisso cadastrado .", "atencao");
+                Notificador.ApresentarMensagem("Nenhum Compromisso cadastrado .", "atencao");
                 return;
             }
 
@@ -64,9 +64,9 @@ namespace E_Agenda.ConsoleApp.Compromisso
             bool conseguiuEditar = repositorioCompromisso.Editar(x => x.numero == numeroCompromisso, compromissoAtualizado);
 
             if (!conseguiuEditar)
-                notificador.ApresentarMensagem("Não foi possível editar.", "erro");
+                Notificador.ApresentarMensagem("Não foi possível editar.", "erro");
             else
-                notificador.ApresentarMensagem("Compromisso editado com sucesso", "sucesso");
+                Notificador.ApresentarMensagem("Compromisso editado com sucesso", "sucesso");
 
         }
 
@@ -80,7 +80,7 @@ namespace E_Agenda.ConsoleApp.Compromisso
 
             if (temCompromissoCadastrados == false)
             {
-                notificador.ApresentarMensagem(
+                Notificador.ApresentarMensagem(
                     "Nenhum amigo Compromisso para poder excluir", "atencao");
                 return;
             }
@@ -91,9 +91,9 @@ namespace E_Agenda.ConsoleApp.Compromisso
             bool conseguiuExcluir = repositorioCompromisso.Excluir(x => x.numero == numeroCompromisso);
 
             if (!conseguiuExcluir)
-                notificador.ApresentarMensagem("Não foi possível excluir.", "erro");
+                Notificador.ApresentarMensagem("Não foi possível excluir.", "erro");
             else
-                notificador.ApresentarMensagem("Compromisso excluído com sucesso!", "sucesso");
+                Notificador.ApresentarMensagem("Compromisso excluído com sucesso!", "sucesso");
         }
 
 
@@ -106,7 +106,7 @@ namespace E_Agenda.ConsoleApp.Compromisso
 
             if (compromissos.Count == 0)
             {
-                notificador.ApresentarMensagem("Não há nenhum compromisso disponível.", "atencao");
+                Notificador.ApresentarMensagem("Não há nenhum compromisso disponível.", "atencao");
                 return false;
             }
 
@@ -151,7 +151,7 @@ namespace E_Agenda.ConsoleApp.Compromisso
 
             if (!temContatoDisponiveis)
             {
-                notificador.ApresentarMensagem("Não há nenhuma contatos disponível para cadastrar revistas", "atenção");
+                Notificador.ApresentarMensagem("Não há nenhuma contatos disponível para cadastrar revistas", "atenção");
                 return null;
             }
 
